@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static GearIntake gear;
 	public static Winch winch;
 	public static VisionUpdate lastUpdate;
-	//public static Vision vision;
+	public static Vision vision;
 	//	public static DOF9 fancygyro;
 	//	static ADC adc;
 
@@ -60,15 +60,15 @@ public class Robot extends IterativeRobot {
 		gear = new GearIntake(joy2);
 		shooter = new Shooter(joy2);
 		autoChooser = new SendableChooser<Command>();
-		autoChooser.addDefault("Middle Gear", new MiddleGearAuto());
-		autoChooser.addObject("fortyKPAuto",  new fortyKPAuto());
+		autoChooser.addObject("Middle Gear", new MiddleGearAuto());
+		autoChooser.addDefault("fortyKPAuto",  new fortyKPAuto());
 		autoChooser.addObject("Boiler Gear", new BoilerSideAuto());
 		autoChooser.addObject("Gear Reset", new GearReset());
 		autoChooser.addObject("SideGearAutoRight", new SideGearAutoRight());
 		//autoChooser.addObject("Shooty", new Shoot(15));
 		//		adc=new ADC(edu.wpi.first.wpilibj.I2C.Port.kMXP);
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
-		
+		vision = new Vision();
 		VisionServer.getInstance().addVisionUpdateReceiver(new VisionUpdateReceiver() {
             public void gotUpdate(VisionUpdate update) {
                 lastUpdate = update;

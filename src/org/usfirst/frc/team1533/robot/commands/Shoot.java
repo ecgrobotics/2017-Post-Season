@@ -21,7 +21,18 @@ public class Shoot extends Command {
 	}
 
 	public void execute() {
+		if (timeSinceInitialized()%4.25 < .25){
+			Robot.shooter.gumball.set(-.85);
+			Robot.shooter.roller.set(1);
+		}
+			else if (timeSinceInitialized()%4.25 > .25)
+			{
+				Robot.shooter.gumball.set(.85);
+				Robot.shooter.roller.set(1);
+			}
+		else{
 			Robot.shooter.agitate();
+		}
 	}
 
 	protected boolean isFinished() {

@@ -196,8 +196,8 @@ public class Swerve extends Subsystem {
 		}
 		
 		if (joy1.getRawButton(Constants.B)) lockWheels();
-		double speed = 85;
-		if (joy1.getRawButton(Constants.RIGHT_BUMPER)) speed = 100;
+		double speed = 100;
+//		if (joy1.getRawButton(Constants.RIGHT_TRIGGER)) speed = 100;
 		double turnRate = 45;
 		if (joy1.getRawButton(Constants.LEFT_BUMPER)) turnRate = 100;
 		double x = joy1.getX();
@@ -205,12 +205,12 @@ public class Swerve extends Subsystem {
 		double z = joy1.getRawAxis(2);
 		if(joy1.getRawButton(Constants.A) && Robot.lastUpdate != null && Robot.lastUpdate.getTargets().size() > 0) {
 		   TargetInfo target = Robot.lastUpdate.getTargets().get(0);
-		   double yy = (.33- target.getY())*12;
-		   double xx = (.135 - target.getX())*1;
+		   double yy = (Constants.VISION_Y_TARGET- target.getY())*12;
+		   double xx = (Constants.VISION_X_TARGET - target.getX())*1;
 		 yy = Math.max(-.3, Math.min(.3,yy));
 		 xx = Math.max(-.3, Math.min(.3,xx));
 		  
-		 driveNormal(0,yy, xx);
+		 driveNormal(x*speed/100, yy, xx);
 		   
 		}
 		else if((Math.abs(x) > .1 || Math.abs(y)>.1 || Math.abs(z) > .1) && !drivingField){		

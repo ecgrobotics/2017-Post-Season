@@ -5,16 +5,16 @@ public class Constants {
 	//Swerve
 	
 	// competition bot
-	public final static double FL_ENC_OFFSET = -296+200-88+360+2;
-	public final static double FR_ENC_OFFSET = -94-15+360+1;
+	/*public final static double FL_ENC_OFFSET = -296+200-88+360+2;
+	public final static double FR_ENC_OFFSET = -94-15+360+1+180;
 	public final static double BL_ENC_OFFSET = -156+138+360-1;
-	public final static double BR_ENC_OFFSET = -13-202+360+1;
+	public final static double BR_ENC_OFFSET = -13-202+360+1+180;*/
 	
 	// practice bot
-//	public final static double FL_ENC_OFFSET = -187+360-287;
-	//public final static double FR_ENC_OFFSET = -248+360;
-	//public final static double BL_ENC_OFFSET = -229+360;
-	//public final static double BR_ENC_OFFSET = -250+360;
+	public final static double FL_ENC_OFFSET = 360-114;
+	public final static double FR_ENC_OFFSET = 360-290+180;
+	public final static double BL_ENC_OFFSET = 360-228;
+	public final static double BR_ENC_OFFSET = 360-249+180;
 
 	public final static double WHEEL_BASE_WIDTH = 22.5;
 	public final static double WHEEL_BASE_LENGTH = 26.5;
@@ -36,6 +36,9 @@ public class Constants {
 	public final static int START = 10;
 	//back
 
+	public final static double VISION_X_TARGET = 0.0895;
+	public final static double VISION_Y_TARGET = 0.1508;
+	
 	/*
 	 * PS2
 	public final static int X = 4;

@@ -16,14 +16,15 @@ public class Shooter {
 	static final double F_GAIN = 1023 / PEAK_NATIVE;
 
 	CANTalon shooter;
-	SpeedController roller, gumball;
+	public SpeedController roller, gumball;
 	Joystick joy;
 	double theta = 0.5, phi = 0.5;
 	int loops = 0;
+	boolean fast = false;
 	boolean prev = false, toggle = false, prevOut = false, toggleOut = false, hopPrev = false;
 	StringBuilder _sb = new StringBuilder();
 	long time;
-
+	
 	public Shooter(Joystick joy){
 		roller = new Spark(Constants.FUEL_INTAKE);
 		gumball = new Spark(Constants.HOPPER);
@@ -36,7 +37,7 @@ public class Shooter {
 		shooter.setF(F_GAIN);
 		shooter.setP(0.6);
 		
-		shooter.setI(0.0000);
+		shooter.setI(0.00);
 		shooter.setD(1.3);
 		time = System.currentTimeMillis();
 	}
@@ -48,11 +49,12 @@ public class Shooter {
 		shooter.changeControlMode(TalonControlMode.Speed);
 		SmartDashboard.putNumber("shooter speed", shooter.getSpeed());
 		SmartDashboard.putNumber("shooter error", Math.abs(shooter.getSetpoint()-shooter.getSpeed()));
-		rampShooter(15330);
+		rampShooter(15650);
 	}
 	public void agitate(){
-		gumball.set(.8);
-		roller.set(.8);
+		roller.set(1);
+		gumball.set(.85);
+		
 	}
 	public void setZero(){
 		gumball.set(0);
@@ -61,23 +63,34 @@ public class Shooter {
 		shooter.set(0);
 	}
 	public void rampShooter(double speed) {
-	    shooter.set(Math.min(speed, shooter.getSpeed()+1000));
+	    shooter.set(Math.min(speed, shooter.getSpeed()+800));
 	}
 	public void shoot(){
 		//stir that hopper
-		if(joy.getRawButton(Constants.LEFT_BUMPER))
-			gumball.set(1);
-		else
-			gumball.set(0);
-		if(Math.abs(-joy.getRawAxis(2)) >= .3){
-		    gumball.set(-joy.getRawAxis(2));
+		if(joy.getRawAxis(2) >= .3){
+			gumball.set(.851533);
 		}
+		else if(joy.getRawAxis(2)<=-.3){
+			
+		if(System.currentTimeMillis()%4250 < 4000)
+			{
+				gumball.set(.851533);
+			}
+			else 
+			{
+				gumball.set(-.851533);
+			}
+		}
+		    else 
+		    {	
+		    	gumball.set(0);
+		    }
 		//shooter
 		if(joy.getRawButton(Constants.RIGHT_BUMPER)) {
 //			shooter.changeControlMode(TalonControlMode.PercentVbus);
 //			shooter.set(1);
 			shooter.changeControlMode(TalonControlMode.Speed);
-			rampShooter(15330);
+			rampShooter(15650);
 			phi = 0;
 			time = System.currentTimeMillis();
 		} else {
@@ -87,7 +100,7 @@ public class Shooter {
 				phi = 1;
 		}
 		SmartDashboard.putNumber("shooter speed", shooter.getSpeed());
-		SmartDashboard.putNumber("shooter error", Math.abs(shooter.getSetpoint()-shooter.getSpeed()));
+		SmartDashboard.putNumber("shooter error", shooter.getSpeed()-shooter.getSetpoint());
 		double motorOutput = shooter.getOutputVoltage() / shooter.getBusVoltage();
 		_sb.append("\terr:");
 		_sb.append(shooter.getClosedLoopError());
@@ -144,7 +157,7 @@ public class Shooter {
 //		prevOut = joy.getRawButton(Constants.RIGHT_TRIGGER);
 
 		if(joy.getRawButton(Constants.LEFT_TRIGGER)){
-			roller.set(1);
+			roller.set(-1);
 		}else if(joy.getRawButton(Constants.RIGHT_TRIGGER))
 			roller.set(1);
 		else if(Math.abs(-joy.getRawAxis(2)) >= .3){

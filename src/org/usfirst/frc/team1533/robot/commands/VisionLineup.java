@@ -33,8 +33,8 @@ public class VisionLineup extends Command {
 		
 		if(Robot.lastUpdate != null && Robot.lastUpdate.getTargets().size() > 0) {
 	           TargetInfo target = Robot.lastUpdate.getTargets().get(0);
-	           double yy = (.33 - target.getY())*12;
-	           double xx = (.135 - target.getX())*1;
+	           double yy = (Constants.VISION_Y_TARGET - target.getY())*12;
+	           double xx = (Constants.VISION_X_TARGET - target.getX())*1;
 	         yy = Math.max(-.3, Math.min(.3,yy));
 	         xx = Math.max(-.3, Math.min(.3,xx));
 	          

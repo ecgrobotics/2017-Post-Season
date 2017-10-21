@@ -19,7 +19,9 @@ public class DriveForwardTime extends Command {
 	}
 	
 	public void execute() {
-		Robot.swerve.driveNormal(0, speed, -Robot.gyro.getAngle() * 0.01);
+		Robot.gear.liftPID.enable();
+		Robot.gear.liftPID.setSetpoint(15*25f/90);
+		Robot.swerve.driveNormal(0, speed, -Robot.gyro.getAngle() * 0.02);
 	}
 	
 	protected boolean isFinished() {

@@ -22,5 +22,8 @@ public class GearReset extends Command{
 		return System.currentTimeMillis() / 1e3 - startTime >= .75;
 	}
 	public void end() {
+		Robot.gear.gearlift.set(0);
+		Robot.gear.liftPID.enable();
+		Robot.gear.liftPID.setSetpoint(0);
 	}
 }
